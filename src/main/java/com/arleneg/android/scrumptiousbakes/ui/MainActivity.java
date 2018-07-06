@@ -2,6 +2,8 @@ package com.arleneg.android.scrumptiousbakes.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -15,19 +17,32 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = MainActivity.class.getSimpleName();
-    private TextView mTempTextView;
+    private RecipeListAdapter mAdapter;
+
+    @BindView(R.id.main_activity_recycler_view)
+    RecyclerView mRecipeRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mTempTextView = findViewById(R.id.temp_text_view);
+
+        ButterKnife.bind(this);
+
+        // setup the recycler view
+        mRecipeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new RecipeListAdapter();
+        mRecipeRecyclerView.setAdapter(mAdapter);
+
+        // get recipe list from network
         getRecipeData();
     }
 
@@ -45,10 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         ArrayList<Recipe> recipes = (ArrayList<Recipe>) response.body();
-                        for (Recipe recipe: recipes) {
-                            mTempTextView.append(recipe.getName() + "\n");
-
-                        }
+                        mAdapter.setRecipeList(recipes);
 //                        mMovieImagesAdapter.setMovieData(mMovieData);
 //                        showMovies();
                     }

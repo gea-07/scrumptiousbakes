@@ -35,6 +35,8 @@ public class Recipe implements Parcelable
     @Expose
     private String image;
 
+    private int resourceId;
+
     public final static Parcelable.Creator<Recipe> CREATOR = new Creator<Recipe>() {
 
         @SuppressWarnings({
@@ -59,6 +61,7 @@ public class Recipe implements Parcelable
         in.readList(this.steps, (Step.class.getClassLoader()));
         this.servings = ((long) in.readValue((long.class.getClassLoader())));
         this.image = ((String) in.readValue((String.class.getClassLoader())));
+        this.resourceId = ((int) in.readValue((int.class.getClassLoader())));
     }
 
     /**
@@ -135,6 +138,14 @@ public class Recipe implements Parcelable
         this.image = image;
     }
 
+    public int getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(int resourceId) {
+        this.resourceId = resourceId;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(id);
         dest.writeValue(name);
@@ -142,6 +153,7 @@ public class Recipe implements Parcelable
         dest.writeList(steps);
         dest.writeValue(servings);
         dest.writeValue(image);
+        dest.writeValue(resourceId);
     }
 
     public int describeContents() {
