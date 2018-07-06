@@ -18,17 +18,26 @@ import java.util.List;
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeListHolder>{
 
     private List<Recipe> mRecipeList;
+    private RecipeItemClickListener mItemClickListener;
+
+    public RecipeListAdapter(RecipeItemClickListener listener) {
+        this.mItemClickListener = listener;
+    }
 
     public void setRecipeList(List<Recipe> recipeList) {
         this.mRecipeList = recipeList;
         notifyDataSetChanged();
     }
 
+    public List<Recipe> getRecipeList() {
+        return mRecipeList;
+    }
+
     @NonNull
     @Override
     public RecipeListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        return new RecipeListHolder(layoutInflater, parent);
+        return new RecipeListHolder(layoutInflater, parent, this);
     }
 
     @Override
@@ -63,16 +72,19 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
     }
 
 
-    public class RecipeListHolder extends RecyclerView.ViewHolder
-        implements View.OnClickListener {
+    public class RecipeListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView mRecipeImageView;
         private TextView mRecipeNameTextView;
+        private RecipeListAdapter mAdapter;
 
-        public RecipeListHolder(LayoutInflater inflater, ViewGroup parent) {
+        public RecipeListHolder(LayoutInflater inflater, ViewGroup parent,
+                                RecipeListAdapter adapter) {
             super(inflater.inflate(R.layout.list_item_recipe, parent, false));
 
             mRecipeImageView = (ImageView) itemView.findViewById(R.id.recipe_imageview);
             mRecipeNameTextView = (TextView) itemView.findViewById(R.id.recipe_name_text_view);
+            this.mAdapter = adapter;
+            this.itemView.setOnClickListener(this);
         }
 
         public void bind(Recipe recipe) {
@@ -93,7 +105,12 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
         @Override
         public void onClick(View v) {
-
+            int clickedItem = getAdapterPosition();
+            mAdapter.mItemClickListener.onItemClick(clickedItem);
         }
+    }
+
+    public interface RecipeItemClickListener {
+        void onItemClick(int item);
     }
 }

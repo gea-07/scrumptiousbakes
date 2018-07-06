@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.arleneg.android.scrumptiousbakes.R;
 import com.arleneg.android.scrumptiousbakes.data.Recipe;
@@ -23,7 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecipeListAdapter.RecipeItemClickListener {
     private final String TAG = MainActivity.class.getSimpleName();
     private RecipeListAdapter mAdapter;
 
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         // setup the recycler view
         mRecipeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new RecipeListAdapter();
+        mAdapter = new RecipeListAdapter(this);
         mRecipeRecyclerView.setAdapter(mAdapter);
 
         // get recipe list from network
@@ -79,5 +80,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Inside onFailure.");
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int item) {
+        Log.d(TAG, "Clicked row " + item);
     }
 }
