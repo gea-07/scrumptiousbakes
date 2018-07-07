@@ -11,4 +11,21 @@
         android:background="@android:color/white">
     </android.support.v7.widget.RecyclerView>
 
+    <TextView
+        android:id="@+id/error_results_not_found_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="@string/network_error"
+        android:textSize="24sp"
+        android:padding="8dp"
+        android:textColor="@color/colorAccent"/>
+
+    <ProgressBar
+        android:id="@+id/data_loading_progress_bar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:visibility="invisible"/>
+
 </FrameLayout>
