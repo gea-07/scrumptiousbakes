@@ -3,4 +3,7 @@
     <string name="network_error">Internet connection not found. Please try again later.</string>
     <string name="network_error_msg">Network error loading recipe data</string>
     <string name="network_not_available">Error loading recipe data. Your internet connection may be down. Please try again later.</string>
+
+    <string name="ingredients_title">Ingredients</string>
+    <string name="steps_title">Steps</string>
 </resources>

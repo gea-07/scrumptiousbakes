@@ -1,5 +1,6 @@
 package com.arleneg.android.scrumptiousbakes.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -109,5 +110,12 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
     public void onItemClick(int item) {
         Toast.makeText(this, mAdapter.getRecipeList().get(item).getName(), Toast.LENGTH_SHORT).show();
         Log.d(TAG, "Clicked row " + item);
+
+        Intent intent = new Intent(this, IngredientsAndStepsActivity.class);
+        intent.putExtra(IngredientsAndStepsActivity.EXTRA_RECIPE_ID, mAdapter.getRecipeList().get(item));
+        startActivity(intent);
     }
 }
+
+// TODO: implement onSaveInstanceState
+// TODO: implement LiveData

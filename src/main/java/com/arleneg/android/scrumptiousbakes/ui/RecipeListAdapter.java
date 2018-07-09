@@ -87,6 +87,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             this.itemView.setOnClickListener(this);
         }
 
+        //TODO: add placeholder image
         public void bind(Recipe recipe) {
             if (!recipe.getImage().isEmpty()) {
                 Picasso.with(mRecipeImageView.getContext())
