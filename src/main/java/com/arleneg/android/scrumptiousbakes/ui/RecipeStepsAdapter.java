@@ -1,5 +1,8 @@
 package com.arleneg.android.scrumptiousbakes.ui;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,9 +23,11 @@ import butterknife.ButterKnife;
 
 class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.RecipeStepHolder> {
     private List<Step> mSteps;
+    private StepItemClickListener mListener;
 
-    public RecipeStepsAdapter(List<Step> steps) {
+    public RecipeStepsAdapter(List<Step> steps, StepItemClickListener listener) {
         this.mSteps = steps;
+        mListener = listener;
     }
 
     @NonNull
@@ -44,7 +49,7 @@ class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.RecipeS
     }
 
     // TODO: Need to implement onClick
-    public class RecipeStepHolder extends RecyclerView.ViewHolder {
+    public class RecipeStepHolder extends RecyclerView.ViewHolder  implements View.OnClickListener {
         private RecipeStepsAdapter mAdapter;
 
         @BindView(R.id.step_num_tv)
@@ -64,11 +69,23 @@ class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.RecipeS
             ButterKnife.bind(this, this.itemView);
 
             this.mAdapter = adapter;
+
+            this.itemView.setOnClickListener(this);
         }
 
         public void bind(Step step) {
             mStepNumTextView.setText(String.format(Locale.getDefault(), "%d", step.getId()));
             mDescriptionTextView.setText(step.getShortDescription());
         }
+
+        @Override
+        public void onClick(View v) {
+            int clickedItem = getAdapterPosition();
+            mAdapter.mListener.onItemClick(clickedItem);
+        }
+    }
+
+    public interface StepItemClickListener {
+        void onItemClick(int position);
     }
 }

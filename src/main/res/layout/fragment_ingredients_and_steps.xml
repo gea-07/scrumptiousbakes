@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        // TODO: Add name of recipe at the top with image and text
         <TextView
             android:id="@+id/ingredients_title_tv"
             android:layout_width="match_parent"

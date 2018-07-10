@@ -6,10 +6,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.arleneg.android.scrumptiousbakes.R;
 import com.arleneg.android.scrumptiousbakes.data.Ingredient;
@@ -23,7 +25,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class IngredientsAndStepsFragment extends Fragment {
+public class IngredientsAndStepsFragment extends Fragment implements RecipeStepsAdapter.StepItemClickListener{
 
     @BindView(R.id.ingredients_title_tv)
     TextView mIngredientsTitleTextView;
@@ -70,7 +72,7 @@ public class IngredientsAndStepsFragment extends Fragment {
 
         mStepsRecyclerView = (RecyclerView) view.findViewById(R.id.steps_recycler_view);
         mStepsRecyclerView.setLayoutManager(new LinearLayoutManager(mStepsRecyclerView.getContext()));
-        mStepsRecyclerView.setAdapter(new RecipeStepsAdapter(getRecipe().getSteps()));
+        mStepsRecyclerView.setAdapter(new RecipeStepsAdapter(getRecipe().getSteps(), this));
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
         mStepsRecyclerView.addItemDecoration(dividerItemDecoration);
@@ -78,4 +80,9 @@ public class IngredientsAndStepsFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onItemClick(int position) {
+        String toastString = String.format(Locale.getDefault(), "Step %d", mRecipe.getSteps().get(position).getId());
+        Toast.makeText(mStepsRecyclerView.getContext(), toastString, Toast.LENGTH_SHORT).show();
+    }
 }
