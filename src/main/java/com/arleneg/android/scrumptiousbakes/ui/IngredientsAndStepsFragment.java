@@ -1,6 +1,7 @@
 package com.arleneg.android.scrumptiousbakes.ui;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -84,5 +85,10 @@ public class IngredientsAndStepsFragment extends Fragment implements RecipeSteps
     public void onItemClick(int position) {
         String toastString = String.format(Locale.getDefault(), "Step %d", mRecipe.getSteps().get(position).getId());
         Toast.makeText(mStepsRecyclerView.getContext(), toastString, Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(mStepsRecyclerView.getContext(), RecipeStepDetailActivity.class);
+        intent.putParcelableArrayListExtra(RecipeStepDetailActivity.EXTRA_STEP_ID, mRecipe.getSteps());
+        intent.putExtra(RecipeStepDetailActivity.EXTRA_CURRENT_POSITION_ID, position);
+        startActivity(intent);
     }
 }
