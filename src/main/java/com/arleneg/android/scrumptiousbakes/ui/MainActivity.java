@@ -29,6 +29,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements RecipeListAdapter.RecipeItemClickListener {
     private final String TAG = MainActivity.class.getSimpleName();
+    private static final String RECIPE_LIST_STATE = "Recipes";
+
     private RecipeListAdapter mAdapter;
 
     @BindView(R.id.main_activity_recycler_view)
@@ -115,7 +117,14 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
         intent.putExtra(IngredientsAndStepsActivity.EXTRA_RECIPE_ID, mAdapter.getRecipeList().get(item));
         startActivity(intent);
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "In onSaveInstanceState. Saving recipe data");
+        outState.putParcelableArrayList(RECIPE_LIST_STATE, (ArrayList)mAdapter.getRecipeList());
+    }
 }
 
-// TODO: implement onSaveInstanceState
+// TODO: implement onRestoreInstanceState
 // TODO: implement LiveData

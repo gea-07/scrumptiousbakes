@@ -48,7 +48,6 @@ class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.RecipeS
         return mSteps.isEmpty() ? 0 : mSteps.size();
     }
 
-    // TODO: Need to implement onClick
     public class RecipeStepHolder extends RecyclerView.ViewHolder  implements View.OnClickListener {
         private RecipeStepsAdapter mAdapter;
 

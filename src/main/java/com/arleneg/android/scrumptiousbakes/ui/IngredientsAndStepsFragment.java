@@ -1,6 +1,7 @@
 package com.arleneg.android.scrumptiousbakes.ui;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.arleneg.android.scrumptiousbakes.R;
 import com.arleneg.android.scrumptiousbakes.data.Ingredient;
 import com.arleneg.android.scrumptiousbakes.data.Recipe;
+import com.arleneg.android.scrumptiousbakes.data.Step;
 
 import java.util.Locale;
 
@@ -42,6 +44,9 @@ public class IngredientsAndStepsFragment extends Fragment implements RecipeSteps
 
     private Recipe mRecipe;
 
+    // Callbacks interface is adapted and modified from Android Programming Big Nerd Ranch book
+    private Callbacks mCallbacks;
+
     public IngredientsAndStepsFragment() {
         // Required empty public constructor
     }
@@ -53,6 +58,7 @@ public class IngredientsAndStepsFragment extends Fragment implements RecipeSteps
     public void setRecipe(Recipe recipe) {
         this.mRecipe = recipe;
     }
+
 
     // TODO: need to implement onSaveInstanceState
     @Override
@@ -83,12 +89,22 @@ public class IngredientsAndStepsFragment extends Fragment implements RecipeSteps
 
     @Override
     public void onItemClick(int position) {
-        String toastString = String.format(Locale.getDefault(), "Step %d", mRecipe.getSteps().get(position).getId());
-        Toast.makeText(mStepsRecyclerView.getContext(), toastString, Toast.LENGTH_SHORT).show();
+        mCallbacks.onStepSelected(position);
+    }
 
-        Intent intent = new Intent(mStepsRecyclerView.getContext(), RecipeStepDetailActivity.class);
-        intent.putParcelableArrayListExtra(RecipeStepDetailActivity.EXTRA_STEP_ID, mRecipe.getSteps());
-        intent.putExtra(RecipeStepDetailActivity.EXTRA_CURRENT_POSITION_ID, position);
-        startActivity(intent);
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
+
+    public interface Callbacks {
+        void onStepSelected(int position);
     }
 }
