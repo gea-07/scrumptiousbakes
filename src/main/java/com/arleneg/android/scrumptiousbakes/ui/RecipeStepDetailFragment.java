@@ -11,12 +11,17 @@ import android.widget.TextView;
 
 import com.arleneg.android.scrumptiousbakes.R;
 import com.arleneg.android.scrumptiousbakes.data.Step;
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
 import butterknife.BindView;
@@ -27,14 +32,18 @@ import butterknife.ButterKnife;
  */
 public class RecipeStepDetailFragment extends Fragment {
 
+    @BindView(R.id.short_description_tv)
+    TextView mShortDescription;
+
     @BindView(R.id.step_description_tv)
     TextView mStepDescription;
 
     @BindView(R.id.player_view)
     PlayerView mPlayerView;
 
+
     private Step mStep;
-    private SimpleExoPlayer mPlayer;
+    private SimpleExoPlayer mExoPlayer;
 
     public RecipeStepDetailFragment() {
         // Required empty public constructor
@@ -48,36 +57,54 @@ public class RecipeStepDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe_step_detail, container, false);
         ButterKnife.bind(this, view);
 
-        mStepDescription.setText(mStep.getDescription());
 
-        // section on ExoPlayer is inspired and copied from https://www.youtube.com/watch?v=svdq1BWl4r8
-        // Building feature-rich media apps with ExoPlayer (Google I/O '18)
         if (mStep.getVideoURL().isEmpty()) {
-            mPlayerView.setVisibility(View.INVISIBLE);
+            mPlayerView.setVisibility(View.GONE);
         }
         else {
             mPlayerView.setVisibility(View.VISIBLE);
-            mPlayer = ExoPlayerFactory.newSimpleInstance(view.getContext(), new DefaultTrackSelector());
-            mPlayerView.setPlayer(mPlayer);
-            DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(view.getContext(),
-                    Util.getUserAgent(view.getContext(), "scrumptiousbakes"));
-            Uri videoUri = Uri.parse(mStep.getVideoURL());
-            ExtractorMediaSource mediaSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(videoUri);
-            mPlayer.prepare(mediaSource);
-            mPlayer.setPlayWhenReady(true);
+            InitializeExoPlayer(view, Uri.parse(mStep.getVideoURL()));
         }
 
+        mShortDescription.setText(mStep.getShortDescription());
+        mStepDescription.setText(mStep.getDescription());
+
         return view;
+    }
+
+
+    private void InitializeExoPlayer(View view, Uri videoUri) {
+
+        if (mExoPlayer == null) {
+            // This ExoPlayer code is copied from Udacity's video from Lesson 6 Media Playback
+            // of Advanced Android track
+
+            mExoPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(view.getContext()),
+                    new DefaultTrackSelector(), new DefaultLoadControl());
+            mPlayerView.setPlayer(mExoPlayer);
+
+            // media source
+            String userAgent = Util.getUserAgent(view.getContext(), "scrumptiousbakes");
+            DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(view.getContext(),
+                    userAgent);
+
+            ExtractorMediaSource mediaSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                    .createMediaSource(videoUri);
+
+            mExoPlayer.prepare(mediaSource);
+            mExoPlayer.setPlayWhenReady(true);
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (!mStep.getVideoURL().isEmpty()) {
-            mPlayerView.setPlayer(null);
-            mPlayer.release();
-            mPlayer = null;
+
+        mPlayerView.setPlayer(null);
+
+        if (mExoPlayer != null) {
+            mExoPlayer.release();
+            mExoPlayer = null;
         }
     }
 

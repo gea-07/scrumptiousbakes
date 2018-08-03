@@ -5,22 +5,32 @@
     android:layout_height="match_parent"
     tools:context=".ui.RecipeStepDetailFragment">
 
-    <LinearLayout
-
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+   <LinearLayout
 
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/player_view"
-            android:layout_width="match_parent"
-            android:layout_height="300dp" />
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+
+
+       <com.google.android.exoplayer2.ui.PlayerView
+           android:id="@+id/player_view"
+           android:layout_width="match_parent"
+           android:layout_height="400dp"
+           android:adjustViewBounds="true"/>
 
         <TextView
-            android:id="@+id/step_description_tv"
+            android:id="@+id/short_description_tv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
 
-    </LinearLayout>
+       <TextView
+           android:id="@+id/step_description_tv"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content" />
 
+      </LinearLayout>
+    </ScrollView>
 </FrameLayout>
