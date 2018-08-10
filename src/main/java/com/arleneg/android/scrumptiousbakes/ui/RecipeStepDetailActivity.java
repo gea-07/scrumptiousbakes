@@ -1,6 +1,7 @@
 package com.arleneg.android.scrumptiousbakes.ui;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -8,6 +9,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.ToxicBakery.viewpager.transforms.AccordionTransformer;
+import com.ToxicBakery.viewpager.transforms.CubeInTransformer;
+import com.ToxicBakery.viewpager.transforms.FlipHorizontalTransformer;
+import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
+import com.ToxicBakery.viewpager.transforms.ZoomInTransformer;
 import com.arleneg.android.scrumptiousbakes.R;
 import com.arleneg.android.scrumptiousbakes.data.Recipe;
 import com.arleneg.android.scrumptiousbakes.data.Step;
@@ -34,6 +40,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         ViewPager pager = (ViewPager) findViewById(R.id.step_view_pager);
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(currentPosition);
+        pager.setPageTransformer(true, new FlipHorizontalTransformer());
     }
 
     private class RecipeStepPagerAdapter extends FragmentPagerAdapter {
@@ -47,6 +54,12 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
             RecipeStepDetailFragment stepDetailFragment = new RecipeStepDetailFragment();
             stepDetailFragment.setStep(mSteps.get(position));
             return stepDetailFragment;
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mSteps.get(position).getShortDescription();
         }
 
         @Override

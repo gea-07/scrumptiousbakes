@@ -8,7 +8,8 @@
     <TextView
         android:id="@+id/step_num_tv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingRight="24dp"/>
 
     <TextView
         android:id="@+id/step_short_desc_tv"

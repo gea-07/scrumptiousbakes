@@ -3,10 +3,12 @@ package com.arleneg.android.scrumptiousbakes.ui;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.arleneg.android.scrumptiousbakes.R;
@@ -32,6 +34,7 @@ import butterknife.ButterKnife;
  */
 public class RecipeStepDetailFragment extends Fragment {
 
+    private static final String STEP_ID = "Step_ID";
     @BindView(R.id.short_description_tv)
     TextView mShortDescription;
 
@@ -41,6 +44,8 @@ public class RecipeStepDetailFragment extends Fragment {
     @BindView(R.id.player_view)
     PlayerView mPlayerView;
 
+    @BindView(R.id.no_image_view)
+    ImageView mNoImageView;
 
     private Step mStep;
     private SimpleExoPlayer mExoPlayer;
@@ -57,12 +62,18 @@ public class RecipeStepDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe_step_detail, container, false);
         ButterKnife.bind(this, view);
 
+        if (savedInstanceState != null) {
+            mStep = savedInstanceState.getParcelable(STEP_ID);
+        }
 
         if (mStep.getVideoURL().isEmpty()) {
             mPlayerView.setVisibility(View.GONE);
+            mNoImageView.setVisibility(View.VISIBLE);
+            mNoImageView.setImageResource(R.drawable.gaelle_marcel_421585_unsplash);
         }
         else {
             mPlayerView.setVisibility(View.VISIBLE);
+            mNoImageView.setVisibility(View.GONE);
             InitializeExoPlayer(view, Uri.parse(mStep.getVideoURL()));
         }
 
@@ -71,7 +82,6 @@ public class RecipeStepDetailFragment extends Fragment {
 
         return view;
     }
-
 
     private void InitializeExoPlayer(View view, Uri videoUri) {
 
@@ -110,5 +120,12 @@ public class RecipeStepDetailFragment extends Fragment {
 
     public void setStep(Step step) {
         this.mStep = step;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelable(STEP_ID, mStep);
     }
 }

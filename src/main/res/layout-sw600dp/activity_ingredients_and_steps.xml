@@ -21,14 +21,12 @@
         android:id="@+id/step_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <FrameLayout
             android:id="@+id/detail_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

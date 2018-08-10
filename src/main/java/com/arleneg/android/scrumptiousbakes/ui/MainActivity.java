@@ -54,9 +54,6 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
         mRecipeRecyclerView.setLayoutManager(new GridLayoutManager(this, (span < 1) ? 1 : span));
         mAdapter = new RecipeListAdapter(this);
         mRecipeRecyclerView.setAdapter(mAdapter);
-
-        // get recipe list from network
-        getRecipeData();
     }
 
     // calculateBestSpanCount was copied from fellow classmate's blog:
@@ -124,7 +121,31 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
         Log.d(TAG, "In onSaveInstanceState. Saving recipe data");
         outState.putParcelableArrayList(RECIPE_LIST_STATE, (ArrayList)mAdapter.getRecipeList());
     }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        Log.d(TAG, "In onRestoreInstanceState");
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            List<Recipe> recipeList = savedInstanceState.getParcelableArrayList(RECIPE_LIST_STATE);
+            mAdapter.setRecipeList(recipeList);
+        }
+        else {
+            // get recipe list from network
+            getRecipeData();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d(TAG, "In onResume");
+        super.onResume();
+        // if the movie data got loaded from restoreInstanceState, no need to call DB again
+        if (mAdapter.getRecipeList() == null) {
+            Log.d(TAG, "In onResume--getRecipeData()");
+            getRecipeData();
+        }
+    }
 }
 
-// TODO: implement onRestoreInstanceState
-// TODO: implement LiveData
