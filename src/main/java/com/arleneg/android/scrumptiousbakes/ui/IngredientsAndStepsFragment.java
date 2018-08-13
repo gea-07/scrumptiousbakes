@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.arleneg.android.scrumptiousbakes.R;
 import com.arleneg.android.scrumptiousbakes.data.Ingredient;
 import com.arleneg.android.scrumptiousbakes.data.Recipe;
+import com.arleneg.android.scrumptiousbakes.services.UpdateIngredientsWidgetIntentService;
 
 import java.util.Locale;
 
@@ -73,15 +74,7 @@ public class IngredientsAndStepsFragment extends Fragment implements RecipeSteps
 
         ButterKnife.bind(this, view);
 
-        String ingredientStr = "";
-
-        for (int i= 0; i < mRecipe.getIngredients().size(); ++i) {
-
-            Ingredient ingredient = mRecipe.getIngredients().get(i);
-            ingredientStr +=  String.format(Locale.getDefault(), "%.1f %s %s",
-                    ingredient.getQuantity(), ingredient.getMeasure(), ingredient.getIngredient())
-                    + "\n";
-        }
+        String ingredientStr = mRecipe.constructIngredientsAsString();
 
         mIngredientsTextView.setText(ingredientStr);
 
@@ -98,6 +91,9 @@ public class IngredientsAndStepsFragment extends Fragment implements RecipeSteps
                 .putString(PREF_RECIPE_TITLE, mRecipe.getName())
                 .putString(PREF_INGREDIENT_LIST, ingredientStr)
                 .apply();
+
+        UpdateIngredientsWidgetIntentService.startActionSetIngredients(getActivity(),
+                mRecipe.getName(), ingredientStr);
 
         return view;
     }

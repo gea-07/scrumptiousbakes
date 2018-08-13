@@ -52,7 +52,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             RecipeStepDetailFragment stepDetailFragment = new RecipeStepDetailFragment();
-            stepDetailFragment.setStep(mSteps.get(position));
+            stepDetailFragment. setStep(mSteps.get(position));
             return stepDetailFragment;
         }
 

@@ -1,6 +1,7 @@
 package com.arleneg.android.scrumptiousbakes.ui;
 
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.arleneg.android.scrumptiousbakes.R;
 import com.arleneg.android.scrumptiousbakes.data.Recipe;
 import com.arleneg.android.scrumptiousbakes.network.RecipeService;
+import com.arleneg.android.scrumptiousbakes.services.UpdateIngredientsWidgetIntentService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +56,11 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
         mRecipeRecyclerView.setLayoutManager(new GridLayoutManager(this, (span < 1) ? 1 : span));
         mAdapter = new RecipeListAdapter(this);
         mRecipeRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void initializeWidget(String widgetTitle, String widgetIngredientList) {
+        UpdateIngredientsWidgetIntentService.startActionSetIngredients(this,
+                widgetTitle, widgetIngredientList);
     }
 
     // calculateBestSpanCount was copied from fellow classmate's blog:
@@ -146,6 +153,12 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
             Log.d(TAG, "In onResume--getRecipeData()");
             getRecipeData();
         }
+
+        // initialize widget with first recipe on the list
+        initializeWidget(PreferenceManager.getDefaultSharedPreferences(this)
+                .getString(IngredientsAndStepsFragment.PREF_RECIPE_TITLE, null),
+                PreferenceManager.getDefaultSharedPreferences(this)
+                        .getString(IngredientsAndStepsFragment.PREF_INGREDIENT_LIST, null));
     }
 }
 

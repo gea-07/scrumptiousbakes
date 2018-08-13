@@ -42,12 +42,15 @@
                 <TextView
                     android:id="@+id/short_description_tv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                <TextView
                    android:id="@+id/step_description_tv"
                    android:layout_width="match_parent"
-                   android:layout_height="wrap_content" />
+                   android:layout_height="wrap_content"
+                   android:layout_margin="16dp"
+                   android:textSize="16sp"/>
            </LinearLayout>
 
     </ScrollView>
