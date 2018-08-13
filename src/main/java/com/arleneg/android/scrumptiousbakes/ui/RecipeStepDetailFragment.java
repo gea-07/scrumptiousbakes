@@ -66,7 +66,7 @@ public class RecipeStepDetailFragment extends Fragment {
             mStep = savedInstanceState.getParcelable(STEP_ID);
         }
 
-        if (mStep.getVideoURL().isEmpty()) {
+        if (mStep.getVideoURL() != null && mStep.getVideoURL().isEmpty()) {
             mPlayerView.setVisibility(View.GONE);
             mNoImageView.setVisibility(View.VISIBLE);
             mNoImageView.setImageResource(R.drawable.gaelle_marcel_421585_unsplash);

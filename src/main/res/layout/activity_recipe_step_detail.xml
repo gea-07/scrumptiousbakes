@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".ui.RecipeStepDetailActivity">
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/step_view_pager"
@@ -14,9 +17,10 @@
 
         <android.support.v4.view.PagerTitleStrip
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:background="@color/colorAccent"
+            android:layout_marginBottom="8dp"
             style="@style/vpTitleStrip" />
     </android.support.v4.view.ViewPager>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

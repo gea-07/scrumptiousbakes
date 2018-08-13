@@ -37,7 +37,8 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
 
         super.onReceive(context, intent);
 
-        if (intent.getAction().equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
+        if (intent.getAction() != null &&
+                intent.getAction().equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
             mWidgetTitle = intent
                     .getStringExtra(UpdateIngredientsWidgetIntentService.EXTRA_PARAM_RECIPE_NAME);
             mWidgetIngredientList = intent

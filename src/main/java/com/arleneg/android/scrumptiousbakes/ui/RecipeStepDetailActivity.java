@@ -37,7 +37,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         int currentPosition = intent.getIntExtra(EXTRA_CURRENT_POSITION_ID, 0);
 
         RecipeStepPagerAdapter pagerAdapter = new RecipeStepPagerAdapter(getSupportFragmentManager());
-        ViewPager pager = (ViewPager) findViewById(R.id.step_view_pager);
+        ViewPager pager = findViewById(R.id.step_view_pager);
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(currentPosition);
         pager.setPageTransformer(true, new FlipHorizontalTransformer());

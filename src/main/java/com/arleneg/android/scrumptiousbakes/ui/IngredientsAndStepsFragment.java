@@ -78,7 +78,7 @@ public class IngredientsAndStepsFragment extends Fragment implements RecipeSteps
 
         mIngredientsTextView.setText(ingredientStr);
 
-        mStepsRecyclerView = (RecyclerView) view.findViewById(R.id.steps_recycler_view);
+        mStepsRecyclerView = view.findViewById(R.id.steps_recycler_view);
         mStepsRecyclerView.setLayoutManager(new LinearLayoutManager(mStepsRecyclerView.getContext()));
         mStepsRecyclerView.setAdapter(new RecipeStepsAdapter(getRecipe().getSteps(), this));
 

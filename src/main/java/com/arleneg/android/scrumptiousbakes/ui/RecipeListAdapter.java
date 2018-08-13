@@ -82,8 +82,8 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             super(inflater.inflate(R.layout.list_item_recipe, parent, false));
 
             // TODO: use butterknife
-            mRecipeImageView = (ImageView) itemView.findViewById(R.id.recipe_imageview);
-            mRecipeNameTextView = (TextView) itemView.findViewById(R.id.recipe_name_text_view);
+            mRecipeImageView = itemView.findViewById(R.id.recipe_imageview);
+            mRecipeNameTextView = itemView.findViewById(R.id.recipe_name_text_view);
             this.mAdapter = adapter;
             this.itemView.setOnClickListener(this);
         }
