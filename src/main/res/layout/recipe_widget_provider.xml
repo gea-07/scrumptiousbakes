@@ -13,7 +13,7 @@
         android:background="#09C"
         android:textColor="#ffffff"
         android:textSize="16sp" />
-    <TextView
+    <ListView
         android:id="@+id/appwidget_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

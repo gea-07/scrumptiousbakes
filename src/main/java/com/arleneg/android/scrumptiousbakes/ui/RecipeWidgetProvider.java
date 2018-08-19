@@ -24,7 +24,7 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
 
     private String mWidgetTitle = null;
 
-    private String mWidgetIngredientList = null;
+    private String[] mWidgetIngredientList = null;
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
@@ -42,15 +42,17 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
             mWidgetTitle = intent
                     .getStringExtra(UpdateIngredientsWidgetIntentService.EXTRA_PARAM_RECIPE_NAME);
             mWidgetIngredientList = intent
-                    .getStringExtra(UpdateIngredientsWidgetIntentService.EXTRA_PARAM_INGREDIENT_LIST);
+                    .getStringArrayExtra(UpdateIngredientsWidgetIntentService.EXTRA_PARAM_INGREDIENT_LIST);
         }
 
         else if (mWidgetTitle == null && mWidgetIngredientList == null){
             mWidgetTitle = PreferenceManager.getDefaultSharedPreferences(context)
                     .getString(IngredientsAndStepsFragment.PREF_RECIPE_TITLE, null);
 
-            mWidgetIngredientList = PreferenceManager.getDefaultSharedPreferences(context)
+            String ingredientListAsStr = PreferenceManager.getDefaultSharedPreferences(context)
                     .getString(IngredientsAndStepsFragment.PREF_INGREDIENT_LIST, null);
+
+            mWidgetIngredientList = ingredientListAsStr.split(",");
         }
 
         Log.i(TAG, "In RecipeWidgetProvider onReceive "
@@ -58,8 +60,7 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
                 + intent.getAction()
                 + " "
                 + mWidgetTitle
-                + " "
-                + mWidgetIngredientList + "\n");
+                + "\n");
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context.getApplicationContext());
         ComponentName thisWidget = new ComponentName(context.getApplicationContext(), RecipeWidgetProvider.class);
@@ -76,8 +77,9 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             // Construct the RemoteViews object
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget_provider);
-            views.setTextViewText(R.id.appwidget_title, mWidgetTitle/*widgetTitle*/);
-            views.setTextViewText(R.id.appwidget_text, mWidgetIngredientList/*widgetIngredientList*/);
+            views.setTextViewText(R.id.appwidget_title, mWidgetTitle);
+            //views.setTextViewText(R.id.appwidget_text, mWidgetIngredientList);
+
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views);
 

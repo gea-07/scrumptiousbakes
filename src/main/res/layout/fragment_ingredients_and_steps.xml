@@ -1,38 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_margin="16dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         tools:context=".ui.IngredientsAndStepsFragment">
+
+        <TextView
+            android:id="@+id/recipe_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="40sp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@android:color/white"
+            android:fontFamily="cursive"
+            android:layout_marginBottom="24dp"/>
 
         <TextView
             android:id="@+id/ingredients_title_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="32sp"
-            android:text="@string/ingredients_title" />
+            android:text="@string/ingredients_title"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="16dp"/>
 
-        <TextView
-            android:id="@+id/ingredients_tv"
+        <ListView
+            android:id="@+id/ingredient_lv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="false"
+            android:layout_marginBottom="16dp"/>
 
         <TextView
             android:id="@+id/steps_title_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="32sp"
-            android:text="@string/steps_title" />
+            android:text="@string/steps_title"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="16dp"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/steps_recycler_view"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/steps_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp">
+
+            </android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
+
 
     </LinearLayout>
+</ScrollView>

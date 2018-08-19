@@ -19,7 +19,7 @@ public class UpdateIngredientsWidgetIntentService extends IntentService {
         super("UpdateIngredientsWidgetIntentService");
     }
 
-    public static void startActionSetIngredients(Context context, String recipeName, String ingredientList) {
+    public static void startActionSetIngredients(Context context, String recipeName, String[] ingredientList) {
         Intent intent = new Intent(context, UpdateIngredientsWidgetIntentService.class);
         intent.setAction(ACTION_SET_INGREDIENTS);
         intent.putExtra(EXTRA_PARAM_RECIPE_NAME, recipeName);
@@ -34,14 +34,14 @@ public class UpdateIngredientsWidgetIntentService extends IntentService {
             final String action = intent.getAction();
             if (ACTION_SET_INGREDIENTS.equals(action)) {
                 final String recipeName = intent.getStringExtra(EXTRA_PARAM_RECIPE_NAME);
-                final String ingredientList = intent.getStringExtra(EXTRA_PARAM_INGREDIENT_LIST);
+                final String[] ingredientList = intent.getStringArrayExtra(EXTRA_PARAM_INGREDIENT_LIST);
                 handleDisplayIngredients(recipeName, ingredientList);
             }
         }
     }
 
-    private void handleDisplayIngredients(String recipeName, String ingredientList) {
-        Log.i(TAG, "In handleDisplayIngredients: " + recipeName + " " + ingredientList);
+    private void handleDisplayIngredients(String recipeName, String[] ingredientList) {
+        Log.i(TAG, "In handleDisplayIngredients: " + recipeName);
         if (recipeName != null && ingredientList != null) {
             Intent intent = new Intent();
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);

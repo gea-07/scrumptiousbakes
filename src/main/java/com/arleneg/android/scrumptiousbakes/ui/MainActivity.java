@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
         mRecipeRecyclerView.setAdapter(mAdapter);
     }
 
-    private void initializeWidget(String widgetTitle, String widgetIngredientList) {
+    private void initializeWidget(String widgetTitle, String[] widgetIngredientList) {
         UpdateIngredientsWidgetIntentService.startActionSetIngredients(this,
                 widgetTitle, widgetIngredientList);
     }
@@ -154,11 +154,12 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
             getRecipeData();
         }
 
+        String ingredientStr = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString(IngredientsAndStepsFragment.PREF_INGREDIENT_LIST, null);
+        String[] ingredientList = ingredientStr.split(",");
         // initialize widget with value from shared preference
         initializeWidget(PreferenceManager.getDefaultSharedPreferences(this)
-                .getString(IngredientsAndStepsFragment.PREF_RECIPE_TITLE, null),
-                PreferenceManager.getDefaultSharedPreferences(this)
-                        .getString(IngredientsAndStepsFragment.PREF_INGREDIENT_LIST, null));
+                .getString(IngredientsAndStepsFragment.PREF_RECIPE_TITLE, null), ingredientList);
     }
 }
 
