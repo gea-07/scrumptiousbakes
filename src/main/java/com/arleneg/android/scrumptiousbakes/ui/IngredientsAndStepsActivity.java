@@ -37,27 +37,40 @@ public class IngredientsAndStepsActivity extends AppCompatActivity
         mRecipe = intent.getParcelableExtra(EXTRA_RECIPE_ID);
 
         if (savedInstanceState == null) {
-            IngredientsAndStepsFragment ingredientsAndStepsFragment = new IngredientsAndStepsFragment();
-
-            // Set the list of image id's for the head fragment and set the position to the second image in the list
-            ingredientsAndStepsFragment.setRecipe(mRecipe);
-
-            // Add the fragment to its container using a FragmentManager and a Transaction
             FragmentManager fragmentManager = getSupportFragmentManager();
+//            IngredientsAndStepsFragment fragment = (IngredientsAndStepsFragment)
+//                    getSupportFragmentManager().findFragmentById(R.id.ingredients_and_steps_container);
 
-            fragmentManager.beginTransaction()
-                    .add(R.id.ingredients_and_steps_container, ingredientsAndStepsFragment)
-                    .commit();
+            if (fragmentManager.findFragmentById(R.id.ingredients_and_steps_container) == null) {
+                IngredientsAndStepsFragment ingredientsAndStepsFragment = new IngredientsAndStepsFragment();
 
+                // Set the list of image id's for the head fragment and set the position to the second image in the list
+                ingredientsAndStepsFragment.setRecipe(mRecipe);
+
+                ingredientsAndStepsFragment.setRetainInstance(true);
+
+                // Add the fragment to its container using a FragmentManager and a Transaction
+                fragmentManager.beginTransaction()
+                        .replace(R.id.ingredients_and_steps_container, ingredientsAndStepsFragment)
+                        .commit();
+                fragmentManager.beginTransaction().addToBackStack(null);
+                fragmentManager.beginTransaction().commit();
+            }
             if (findViewById(R.id.step_linear_layout) != null) {
                 mTwoPanes = true;
 
-                RecipeStepDetailFragment stepDetailFragment = new RecipeStepDetailFragment();
-                stepDetailFragment.setStep(mRecipe.getSteps().get(0));
+                if (fragmentManager.findFragmentById(R.id.detail_container) == null) {
+                    RecipeStepDetailFragment stepDetailFragment = new RecipeStepDetailFragment();
+                    stepDetailFragment.setStep(mRecipe.getSteps().get(0));
+                    stepDetailFragment.setRetainInstance(true);
 
-                fragmentManager.beginTransaction()
-                        .add(R.id.detail_container, stepDetailFragment)
-                        .commit();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.detail_container, stepDetailFragment)
+                            .commit();
+
+                    fragmentManager.beginTransaction().addToBackStack(null);
+                    fragmentManager.beginTransaction().commit();
+                }
 
             } else {
                 mTwoPanes = false;

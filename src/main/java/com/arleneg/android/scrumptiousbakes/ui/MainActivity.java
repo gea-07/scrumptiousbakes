@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
             getRecipeData();
         }
 
-        // initialize widget with first recipe on the list
+        // initialize widget with value from shared preference
         initializeWidget(PreferenceManager.getDefaultSharedPreferences(this)
                 .getString(IngredientsAndStepsFragment.PREF_RECIPE_TITLE, null),
                 PreferenceManager.getDefaultSharedPreferences(this)

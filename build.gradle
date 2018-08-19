@@ -55,6 +55,8 @@ dependencies {
     // ExoPlayer
     implementation 'com.google.android.exoplayer:exoplayer-core:2.8.0'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.8.0'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.7.3'
+
 
     // view pager transform
     implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
