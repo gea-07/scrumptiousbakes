@@ -7,11 +7,10 @@
     android:fillViewport="true">
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="16dp"
+        android:layout_margin="20dp"
         android:focusable="true"
         android:focusableInTouchMode="true"
         tools:context=".ui.IngredientsAndStepsFragment">
@@ -40,8 +39,7 @@
             android:id="@+id/ingredient_lv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawSelectorOnTop="false"
-            android:layout_marginBottom="16dp"/>
+            android:drawSelectorOnTop="false" />
 
         <TextView
             android:id="@+id/steps_title_tv"

@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import com.arleneg.android.scrumptiousbakes.R;
 import com.arleneg.android.scrumptiousbakes.data.Recipe;
-import com.arleneg.android.scrumptiousbakes.services.UpdateIngredientsWidgetIntentService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -123,7 +122,7 @@ public class IngredientsAndStepsFragment extends Fragment implements RecipeSteps
         // https://stackoverflow.com/questions/7965290/put-and-get-string-array-from-shared-preferences
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < ingredientList.length; i++) {
-            sb.append(ingredientList[i]).append(",");
+            sb.append(ingredientList[i]).append("\n");
         }
 
          //store recipe name and ingredients in shared preference
@@ -133,9 +132,7 @@ public class IngredientsAndStepsFragment extends Fragment implements RecipeSteps
                 .putString(PREF_INGREDIENT_LIST, sb.toString())
                 .apply();
 
-          UpdateIngredientsWidgetIntentService.startActionSetIngredients(getActivity(),
-                mRecipe.getName(), ingredientList);
-
+        RecipeWidgetProvider.sendRefreshBroadcast(getActivity());
 
         return view;
     }

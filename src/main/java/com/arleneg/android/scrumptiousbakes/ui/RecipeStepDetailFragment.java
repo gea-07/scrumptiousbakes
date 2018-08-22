@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.arleneg.android.scrumptiousbakes.R;
+import com.arleneg.android.scrumptiousbakes.data.Recipe;
 import com.arleneg.android.scrumptiousbakes.data.Step;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
@@ -39,8 +40,8 @@ public class RecipeStepDetailFragment extends Fragment {
     private static final String PLAY_WHEN_READY = "playWhenReady";
     private static final String CURRENT_WINDOW = "currentWindow";
 
-    @BindView(R.id.short_description_tv)
-    TextView mShortDescription;
+    @BindView(R.id.step_recipe_name_tv)
+    TextView mRecipeName;
 
     @BindView(R.id.step_description_tv)
     TextView mStepDescription;
@@ -59,6 +60,7 @@ public class RecipeStepDetailFragment extends Fragment {
     private long mPlaybackPosition = 0;
     private int mCurrentWindow = 0;
     private boolean mPlayWhenReady = true;
+    private Recipe mRecipe;
 
     public RecipeStepDetailFragment() {
         // Required empty public constructor
@@ -89,7 +91,7 @@ public class RecipeStepDetailFragment extends Fragment {
         }
 
         if (mStep != null) {
-            mShortDescription.setText(mStep.getShortDescription());
+            mRecipeName.setText(mRecipe.getName());
             mStepDescription.setText(mStep.getDescription());
         }
 
@@ -194,8 +196,9 @@ public class RecipeStepDetailFragment extends Fragment {
 //                  | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
-    public void setStep(Step step) {
-        this.mStep = step;
+    public void setStep(Recipe recipe, int position) {
+        mRecipe = recipe;
+        mStep = mRecipe.getSteps().get(position);
     }
 
     @Override

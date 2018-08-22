@@ -1,6 +1,5 @@
 package com.arleneg.android.scrumptiousbakes.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,11 +7,8 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.arleneg.android.scrumptiousbakes.R;
-import com.arleneg.android.scrumptiousbakes.data.Ingredient;
 import com.arleneg.android.scrumptiousbakes.data.Recipe;
-import com.arleneg.android.scrumptiousbakes.data.Step;
 
-import java.util.List;
 import java.util.Locale;
 
 public class IngredientsAndStepsActivity extends AppCompatActivity
@@ -47,7 +43,7 @@ public class IngredientsAndStepsActivity extends AppCompatActivity
                 // Set the list of image id's for the head fragment and set the position to the second image in the list
                 ingredientsAndStepsFragment.setRecipe(mRecipe);
 
-                ingredientsAndStepsFragment.setRetainInstance(true);
+               // ingredientsAndStepsFragment.setRetainInstance(true);
 
                 // Add the fragment to its container using a FragmentManager and a Transaction
                 fragmentManager.beginTransaction()
@@ -61,7 +57,7 @@ public class IngredientsAndStepsActivity extends AppCompatActivity
 
                 if (fragmentManager.findFragmentById(R.id.detail_container) == null) {
                     RecipeStepDetailFragment stepDetailFragment = new RecipeStepDetailFragment();
-                    stepDetailFragment.setStep(mRecipe.getSteps().get(0));
+                    stepDetailFragment.setStep(mRecipe, 0);
                     stepDetailFragment.setRetainInstance(true);
 
                     fragmentManager.beginTransaction()
@@ -94,13 +90,13 @@ public class IngredientsAndStepsActivity extends AppCompatActivity
             Toast.makeText(this, toastString, Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(this, RecipeStepDetailActivity.class);
-            intent.putParcelableArrayListExtra(RecipeStepDetailActivity.EXTRA_STEP_ID, mRecipe.getSteps());
+            intent.putExtra(RecipeStepDetailActivity.EXTRA_RECIPE_ID, mRecipe);
             intent.putExtra(RecipeStepDetailActivity.EXTRA_CURRENT_POSITION_ID, position);
             startActivity(intent);
         }
         else {
             RecipeStepDetailFragment stepDetailFragment = new RecipeStepDetailFragment();
-            stepDetailFragment.setStep(mRecipe.getSteps().get(position));
+            stepDetailFragment.setStep(mRecipe, position);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.detail_container, stepDetailFragment)
                     .commit();

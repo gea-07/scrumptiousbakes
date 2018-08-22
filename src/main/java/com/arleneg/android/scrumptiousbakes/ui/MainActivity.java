@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.arleneg.android.scrumptiousbakes.R;
 import com.arleneg.android.scrumptiousbakes.data.Recipe;
 import com.arleneg.android.scrumptiousbakes.network.RecipeService;
-import com.arleneg.android.scrumptiousbakes.services.UpdateIngredientsWidgetIntentService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +58,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
     }
 
     private void initializeWidget(String widgetTitle, String[] widgetIngredientList) {
-        UpdateIngredientsWidgetIntentService.startActionSetIngredients(this,
-                widgetTitle, widgetIngredientList);
+        RecipeWidgetProvider.sendRefreshBroadcast(this);
     }
 
     // calculateBestSpanCount was copied from fellow classmate's blog:

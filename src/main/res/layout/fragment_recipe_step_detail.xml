@@ -5,22 +5,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
+    android:fillViewport="true"
     tools:context=".ui.RecipeStepDetailFragment">
 
    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:orientation="vertical">
+       android:orientation="vertical"
+       android:focusable="true"
+       android:focusableInTouchMode="true">
 
+       <TextView
+           android:id="@+id/step_recipe_name_tv"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:background="@color/colorPrimaryDark"
+           android:textSize="24sp"
+           android:textColor="@android:color/white"
+           android:fontFamily="cursive"
+           android:visibility="gone"/>
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
            android:id="@+id/player_view"
            android:layout_width="match_parent"
-           android:layout_height="250dp"
+           android:layout_height="400dp"
            android:background="@android:color/black"
            android:scaleType="centerCrop"
            app:fastforward_increment="1000"
            app:rewind_increment="1000"/>
+       </RelativeLayout>
 
        <ImageView
            android:id="@+id/no_image_view"
@@ -32,18 +48,13 @@
            android:visibility="invisible"
            android:contentDescription="Recipe without a video" />
 
-        <TextView
-            android:id="@+id/short_description_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>
-
        <TextView
            android:id="@+id/step_description_tv"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_margin="16dp"
-           android:textSize="16sp"/>
+           android:textSize="16sp" />
+
    </LinearLayout>
 
 </ScrollView>
