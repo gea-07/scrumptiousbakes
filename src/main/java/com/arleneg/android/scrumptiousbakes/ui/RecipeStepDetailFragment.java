@@ -34,11 +34,13 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  */
 public class RecipeStepDetailFragment extends Fragment {
-    private static final String TAG = "RecipeStepDetail";
-    private static final String STEP_ID = "stepID";
+    private static final String TAG = "StepDetailFragment";
+    private static final String RECIPE_ID = "recipeID";
+    private static final String STEP_POSITION_ID = "stepPositionID";
     private static final String PLAYBACK_POSITION = "playbackPosition";
     private static final String PLAY_WHEN_READY = "playWhenReady";
     private static final String CURRENT_WINDOW = "currentWindow";
+
 
     @BindView(R.id.step_recipe_name_tv)
     TextView mRecipeName;
@@ -52,7 +54,9 @@ public class RecipeStepDetailFragment extends Fragment {
     @BindView(R.id.no_image_view)
     ImageView mNoImageView;
 
-    private Step mStep = null;
+    private Recipe mRecipe = null;
+    private int mStepPosition = 0;
+    private Step mStep =  null;
     private SimpleExoPlayer mExoPlayer = null;
     private View mFragmentRecipeStepView = null;
 
@@ -60,7 +64,6 @@ public class RecipeStepDetailFragment extends Fragment {
     private long mPlaybackPosition = 0;
     private int mCurrentWindow = 0;
     private boolean mPlayWhenReady = true;
-    private Recipe mRecipe;
 
     public RecipeStepDetailFragment() {
         // Required empty public constructor
@@ -75,10 +78,17 @@ public class RecipeStepDetailFragment extends Fragment {
         ButterKnife.bind(this, mFragmentRecipeStepView);
 
         if (savedInstanceState != null) {
-            mStep = savedInstanceState.getParcelable(STEP_ID);
+            mRecipe = savedInstanceState.getParcelable(RECIPE_ID);
+            mStepPosition = savedInstanceState.getInt(STEP_POSITION_ID);
             mPlaybackPosition = savedInstanceState.getLong(PLAYBACK_POSITION);
             mCurrentWindow = savedInstanceState.getInt(CURRENT_WINDOW);
             mPlayWhenReady = savedInstanceState.getBoolean(PLAY_WHEN_READY);
+            mStep = mRecipe.getSteps().get(mStepPosition);
+        }
+        else {
+            mPlaybackPosition = 0;
+            mCurrentWindow = 0;
+            mPlayWhenReady = true;
         }
 
         Log.i(TAG, String.format("In onCreateView %h, %d, %d, %b"
@@ -100,7 +110,7 @@ public class RecipeStepDetailFragment extends Fragment {
 
     private void initializeExoPlayer() {
 
-        if (mExoPlayer == null) {
+        if (mExoPlayer == null && !mStep.getVideoURL().isEmpty()) {
             Log.i(TAG, String.format("In initializeExoPlayer %h, %d, %d, %b"
                     , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
             // This ExoPlayer code is copied from Udacity's video from Lesson 6 Media Playback
@@ -129,7 +139,8 @@ public class RecipeStepDetailFragment extends Fragment {
     // were copied from https://codelabs.developers.google.com/codelabs/exoplayer-intro/#2
     @Override
     public void onStart() {
-        Log.i(TAG, "In onStart");
+        Log.i(TAG, String.format("In onStart--%h, %d, %d, %b"
+                , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
         super.onStart();
         if (Util.SDK_INT > 23) {
             Log.i(TAG, String.format("In onStart--about to call initializeExoPlayer %h, %d, %d, %b"
@@ -140,10 +151,10 @@ public class RecipeStepDetailFragment extends Fragment {
 
     @Override
     public void onResume() {
-        Log.i(TAG, "In onResume");
+        Log.i(TAG, String.format("In onResume--%h, %d, %d, %b"
+                , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
         super.onResume();
-        hideSystemUi();
-        if ((Util.SDK_INT <= 23 || mExoPlayer == null)) {
+        if ((Util.SDK_INT <= 23)) {
             Log.i(TAG, String.format("In onResume--about to call initializeExoPlayer %h, %d, %d, %b"
                     , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
             initializeExoPlayer();
@@ -152,7 +163,8 @@ public class RecipeStepDetailFragment extends Fragment {
 
     @Override
     public void onPause() {
-        Log.i(TAG, "In onPause");
+        Log.i(TAG, String.format("In onPause--%h, %d, %d, %b"
+                , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
         super.onPause();
         if (Util.SDK_INT <= 23) {
             Log.i(TAG, String.format("In onPause--about to call releasePlayer %h, %d, %d, %b"
@@ -163,7 +175,8 @@ public class RecipeStepDetailFragment extends Fragment {
 
     @Override
     public void onStop() {
-        Log.i(TAG, "In onStop");
+        Log.i(TAG, String.format("In onStop--%h, %d, %d, %b"
+                , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
         super.onStop();
 
         if (Util.SDK_INT > 23) {
@@ -174,7 +187,7 @@ public class RecipeStepDetailFragment extends Fragment {
     }
 
     private void releasePlayer() {
-        if (mExoPlayer != null) {
+        if (mExoPlayer != null && !mStep.getVideoURL().isEmpty()) {
             mPlaybackPosition = mExoPlayer.getCurrentPosition();
             mCurrentWindow = mExoPlayer.getCurrentWindowIndex();
             mPlayWhenReady = mExoPlayer.getPlayWhenReady();
@@ -186,19 +199,12 @@ public class RecipeStepDetailFragment extends Fragment {
         }
     }
 
-    @SuppressLint("InlinedApi")
-    private void hideSystemUi() {
-//        mPlayerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-//                | View.SYSTEM_UI_FLAG_FULLSCREEN
-//                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-//                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                  | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-    }
-
     public void setStep(Recipe recipe, int position) {
-        mRecipe = recipe;
-        mStep = mRecipe.getSteps().get(position);
+        if (recipe != null) {
+            mRecipe = recipe;
+            mStepPosition = position;
+            mStep = mRecipe.getSteps().get(mStepPosition);
+        }
     }
 
     @Override
@@ -218,8 +224,9 @@ public class RecipeStepDetailFragment extends Fragment {
             outState.putInt(CURRENT_WINDOW, mCurrentWindow);
         }
 
-        if (mStep != null) {
-            outState.putParcelable(STEP_ID, mStep);
+        if (mRecipe != null) {
+            outState.putParcelable(RECIPE_ID, mRecipe);
+            outState.putInt(STEP_POSITION_ID, mStepPosition);
         }
     }
 }

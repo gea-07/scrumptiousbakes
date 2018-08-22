@@ -41,9 +41,10 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(currentPosition);
         pager.setPageTransformer(true, new FlipHorizontalTransformer());
+        pager.setOffscreenPageLimit(1);
     }
 
-    private class RecipeStepPagerAdapter extends FragmentPagerAdapter {
+    private class RecipeStepPagerAdapter extends FragmentStatePagerAdapter {
 
         public RecipeStepPagerAdapter(FragmentManager fm) {
             super(fm);
