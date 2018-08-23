@@ -13,11 +13,7 @@
   <component name="ChangeListManager">
     <list default="true" id="04ef1171-ecc6-4999-a662-1e2e6169d53f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeStepDetailActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeStepDetailActivity.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeStepDetailFragment.java" afterPath="$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeStepDetailFragment.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/fragment_recipe_step_detail.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/fragment_recipe_step_detail.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/src/main/res/values/strings.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/xml/recipe_widget_provider_info.xml" afterPath="$PROJECT_DIR$/src/main/res/xml/recipe_widget_provider_info.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -43,7 +39,7 @@
       <file leaf-file-name="fragment_recipe_step_detail.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/res/layout/fragment_recipe_step_detail.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
+            <state relative-caret-position="459">
               <caret line="48" column="64" lean-forward="false" selection-start-line="48" selection-start-column="64" selection-end-line="48" selection-end-column="64" />
               <folding />
             </state>
@@ -66,8 +62,8 @@
       <file leaf-file-name="RecipeStepDetailFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeStepDetailFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-813">
-              <caret line="129" column="71" lean-forward="true" selection-start-line="129" selection-start-column="71" selection-end-line="129" selection-end-column="71" />
+            <state relative-caret-position="938">
+              <caret line="128" column="13" lean-forward="false" selection-start-line="128" selection-start-column="13" selection-end-line="128" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -78,8 +74,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="layoutResourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -98,6 +94,7 @@
       <find>mRecipe</find>
       <find>STEP_ID</find>
       <find>mStep</find>
+      <find>KeyEventCompat</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -2136,6 +2133,7 @@
         <option value="$PROJECT_DIR$/src/main/res/xml/recipe_widget_provider_info.xml" />
         <option value="$PROJECT_DIR$/src/main/res/layout/fragment_recipe_step_detail.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeStepDetailActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/CustomViewPager.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeStepDetailFragment.java" />
       </list>
     </option>
@@ -2463,7 +2461,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24272588" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29096478" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905483" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2484,66 +2482,15 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeStepDetailFragment.java</url>
-          <line>76</line>
+          <line>127</line>
           <properties />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeStepDetailFragment.java</url>
-          <line>155</line>
-          <properties />
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeStepDetailFragment.java</url>
-          <line>167</line>
-          <properties />
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeStepDetailFragment.java</url>
-          <line>179</line>
-          <properties />
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeStepDetailFragment.java</url>
-          <line>143</line>
-          <properties />
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeStepDetailActivity.java</url>
-          <line>30</line>
-          <properties />
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeWidgetProvider.java</url>
-          <line>23</line>
-          <properties />
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/services/IngredientsListViewRemoteViewsFactory.java</url>
-          <line>53</line>
-          <properties />
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/MainActivity.java</url>
-          <line>60</line>
-          <properties />
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeWidgetProvider.java</url>
-          <line>36</line>
-          <properties />
-          <option name="timeStamp" value="18" />
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="19" />
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <option name="time" value="21" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2879,15 +2826,12 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/fragment_recipe_step_detail.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/CustomViewPager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="48" column="64" lean-forward="false" selection-start-line="48" selection-start-column="64" selection-end-line="48" selection-end-column="64" />
+        <state relative-caret-position="210">
+          <caret line="14" column="45" lean-forward="false" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="45" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeStepDetailActivity.java">
@@ -2898,10 +2842,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/fragment_recipe_step_detail.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="48" column="64" lean-forward="false" selection-start-line="48" selection-start-column="64" selection-end-line="48" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/arleneg/android/scrumptiousbakes/ui/RecipeStepDetailFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-813">
-          <caret line="129" column="71" lean-forward="true" selection-start-line="129" selection-start-column="71" selection-end-line="129" selection-end-column="71" />
+        <state relative-caret-position="938">
+          <caret line="128" column="13" lean-forward="false" selection-start-line="128" selection-start-column="13" selection-end-line="128" selection-end-column="13" />
           <folding />
         </state>
       </provider>

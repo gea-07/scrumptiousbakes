@@ -78,6 +78,7 @@ public class RecipeStepDetailFragment extends Fragment {
         ButterKnife.bind(this, mFragmentRecipeStepView);
 
         if (savedInstanceState != null) {
+            Log.i(TAG, "In onCreateView -- restoring data from saved Instance");
             mRecipe = savedInstanceState.getParcelable(RECIPE_ID);
             mStepPosition = savedInstanceState.getInt(STEP_POSITION_ID);
             mPlaybackPosition = savedInstanceState.getLong(PLAYBACK_POSITION);
@@ -91,8 +92,11 @@ public class RecipeStepDetailFragment extends Fragment {
             mPlayWhenReady = true;
         }
 
-        Log.i(TAG, String.format("In onCreateView %h, %d, %d, %b"
-                , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
+        if (mRecipe != null) {
+        Log.i(TAG, String.format("In onCreateView %s %s %h",
+                mRecipe.getName(),  mRecipe.getSteps().get(mStepPosition).getShortDescription(),
+                this ));
+        }
 
         if (mStep != null && mStep.getVideoURL() != null && mStep.getVideoURL().isEmpty()) {
             mPlayerView.setVisibility(View.GONE);
@@ -103,16 +107,35 @@ public class RecipeStepDetailFragment extends Fragment {
         if (mStep != null) {
             mRecipeName.setText(mRecipe.getName());
             mStepDescription.setText(mStep.getDescription());
+
+            if (getUserVisibleHint()) {
+                initializeExoPlayer();
+            }
         }
 
         return mFragmentRecipeStepView;
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (this.isVisible()) {
+            if (isVisibleToUser && isResumed()) {
+                Log.i(TAG, String.format("In setUserVisibleHint %s %s %h, %d, %d, %b",
+                        mRecipe.getName(), mRecipe.getSteps().get(mStepPosition).getShortDescription(),
+                        this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
+                initializeExoPlayer();
+            }
+        }
+    }
+
     private void initializeExoPlayer() {
 
         if (mExoPlayer == null && !mStep.getVideoURL().isEmpty()) {
-            Log.i(TAG, String.format("In initializeExoPlayer %h, %d, %d, %b"
-                    , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
+            Log.i(TAG, String.format("In initializeExoPlayer %s %s %h, %d, %d, %b",
+                    mRecipe.getName(), mRecipe.getSteps().get(mStepPosition).getShortDescription(),
+                    this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
             // This ExoPlayer code is copied from Udacity's video from Lesson 6 Media Playback
             // of Advanced Android track and from from https://codelabs.developers.google.com/codelabs/exoplayer-intro/#2
 
@@ -139,49 +162,49 @@ public class RecipeStepDetailFragment extends Fragment {
     // were copied from https://codelabs.developers.google.com/codelabs/exoplayer-intro/#2
     @Override
     public void onStart() {
-        Log.i(TAG, String.format("In onStart--%h, %d, %d, %b"
-                , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
+        Log.i(TAG, String.format("In onStart %s %s %h, %d, %d, %b",
+                mRecipe.getName(),  mRecipe.getSteps().get(mStepPosition).getShortDescription(),
+                this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
         super.onStart();
-        if (Util.SDK_INT > 23) {
-            Log.i(TAG, String.format("In onStart--about to call initializeExoPlayer %h, %d, %d, %b"
-                    , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
-            initializeExoPlayer();
-        }
+//        if (Util.SDK_INT > 23) {
+//            Log.i(TAG, String.format("In onStart--about to call initializeExoPlayer %h, %d, %d, %b"
+//                    , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
+//            initializeExoPlayer();
+//        }
     }
 
     @Override
     public void onResume() {
-        Log.i(TAG, String.format("In onResume--%h, %d, %d, %b"
-                , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
+        Log.i(TAG, String.format("In onResume %s %s %h, %d, %d, %b",
+                mRecipe.getName(),  mRecipe.getSteps().get(mStepPosition).getShortDescription(),
+                this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
         super.onResume();
-        if ((Util.SDK_INT <= 23)) {
-            Log.i(TAG, String.format("In onResume--about to call initializeExoPlayer %h, %d, %d, %b"
-                    , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
-            initializeExoPlayer();
-        }
+//        if ((Util.SDK_INT <= 23)) {
+//            Log.i(TAG, String.format("In onResume--about to call initializeExoPlayer %h, %d, %d, %b"
+//                    , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
+//            initializeExoPlayer();
+//        }
     }
 
     @Override
     public void onPause() {
-        Log.i(TAG, String.format("In onPause--%h, %d, %d, %b"
-                , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
+        Log.i(TAG, String.format("In onPause %s %s %h, %d, %d, %b",
+                mRecipe.getName(),  mRecipe.getSteps().get(mStepPosition).getShortDescription(),
+                this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
         super.onPause();
         if (Util.SDK_INT <= 23) {
-            Log.i(TAG, String.format("In onPause--about to call releasePlayer %h, %d, %d, %b"
-                    , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
             releasePlayer();
         }
     }
 
     @Override
     public void onStop() {
-        Log.i(TAG, String.format("In onStop--%h, %d, %d, %b"
-                , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
+        Log.i(TAG, String.format("In onStop %s %s %h, %d, %d, %b",
+                mRecipe.getName(),  mRecipe.getSteps().get(mStepPosition).getShortDescription(),
+                this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
         super.onStop();
 
         if (Util.SDK_INT > 23) {
-            Log.i(TAG, String.format("In onStop--about to call releasePlayer %h, %d, %d, %b"
-                    , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
             releasePlayer();
         }
     }
@@ -191,8 +214,9 @@ public class RecipeStepDetailFragment extends Fragment {
             mPlaybackPosition = mExoPlayer.getCurrentPosition();
             mCurrentWindow = mExoPlayer.getCurrentWindowIndex();
             mPlayWhenReady = mExoPlayer.getPlayWhenReady();
-            Log.i(TAG, String.format("In releasePlayer %h, %d, %d, %b"
-                    , this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
+            Log.i(TAG, String.format("In releasePlayer %s %s %h, %d, %d, %b",
+                    mRecipe.getName(),  mRecipe.getSteps().get(mStepPosition).getShortDescription(),
+                    this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
             mExoPlayer.stop();
             mExoPlayer.release();
             mExoPlayer = null;
@@ -217,8 +241,9 @@ public class RecipeStepDetailFragment extends Fragment {
             mCurrentWindow = mExoPlayer.getCurrentWindowIndex();
             mPlayWhenReady = mExoPlayer.getPlayWhenReady();
 
-            Log.i(TAG, String.format("In onSaveInstanceState %h, %d, %d, %b"
-                    , this, mCurrentWindow, mPlaybackPosition, mPlayWhenReady));
+            Log.i(TAG, String.format("In onSaveInstanceState %s %s %h, %d, %d, %b",
+                    mRecipe.getName(),  mRecipe.getSteps().get(mStepPosition).getShortDescription(),
+                    this , mCurrentWindow , mPlaybackPosition , mPlayWhenReady));
             outState.putLong(PLAYBACK_POSITION, mPlaybackPosition);
             outState.putBoolean(PLAY_WHEN_READY, mPlayWhenReady);
             outState.putInt(CURRENT_WINDOW, mCurrentWindow);
