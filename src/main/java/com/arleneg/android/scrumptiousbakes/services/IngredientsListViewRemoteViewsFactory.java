@@ -41,7 +41,7 @@ class IngredientsListViewRemoteViewsFactory implements RemoteViewsService.Remote
         String ingredientListAsStr = PreferenceManager.getDefaultSharedPreferences(mContext)
                 .getString(IngredientsAndStepsFragment.PREF_INGREDIENT_LIST, null);
 
-        String[] ingredients = ingredientListAsStr.split("\n");
+        String[] ingredients = ingredientListAsStr != null ? ingredientListAsStr.split("\n") : new String[0];
         int i = 1;
         for (String s : ingredients) {
             mIngredients.add(i, s);

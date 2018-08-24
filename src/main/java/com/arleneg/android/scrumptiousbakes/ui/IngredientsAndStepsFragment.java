@@ -22,6 +22,8 @@ import android.widget.TextView;
 import com.arleneg.android.scrumptiousbakes.R;
 import com.arleneg.android.scrumptiousbakes.data.Recipe;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -85,11 +87,11 @@ public class IngredientsAndStepsFragment extends Fragment implements RecipeSteps
             mRecipe = savedInstanceState.getParcelable(RECIPE_ID);
         }
 
-        mRecipeName.setText(mRecipe.getName());
+        mRecipeName.setText(mRecipe != null ? mRecipe.getName() : null);
 
         String[] ingredientList = mRecipe.constructIngredientsAsStringArray();
 
-        mIngredientListView.setAdapter(new ArrayAdapter<String>(getActivity(),
+        mIngredientListView.setAdapter(new ArrayAdapter<String>(Objects.requireNonNull(getActivity()),
                 R.layout.ingredient_list_item,
                 ingredientList));
 
@@ -115,7 +117,7 @@ public class IngredientsAndStepsFragment extends Fragment implements RecipeSteps
         mStepsRecyclerView.setLayoutManager(new LinearLayoutManager(mStepsRecyclerView.getContext()));
         mStepsRecyclerView.setAdapter(new RecipeStepsAdapter(getRecipe().getSteps(), this));
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(Objects.requireNonNull(getContext()), DividerItemDecoration.VERTICAL);
         mStepsRecyclerView.addItemDecoration(dividerItemDecoration);
 
         // Lines 123 to 126 to store a string array in shared preferences was copied from

@@ -124,7 +124,9 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.d(TAG, "In onSaveInstanceState. Saving recipe data");
-        outState.putParcelableArrayList(RECIPE_LIST_STATE, (ArrayList)mAdapter.getRecipeList());
+        if (mAdapter.getRecipeList() != null) {
+            outState.putParcelableArrayList(RECIPE_LIST_STATE, (ArrayList) mAdapter.getRecipeList());
+        }
     }
 
     @Override

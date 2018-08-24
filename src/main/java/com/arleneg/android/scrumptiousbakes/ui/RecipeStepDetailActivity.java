@@ -82,7 +82,8 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         fragmentManager.beginTransaction()
                 .replace(R.id.step_fragment, stepDetailFragment)
                 .commit();
-        fragmentManager.beginTransaction().addToBackStack(null);
-        fragmentManager.beginTransaction().commit();
+        fragmentManager.beginTransaction()
+                .addToBackStack(null)
+                .commit();
     }
 }

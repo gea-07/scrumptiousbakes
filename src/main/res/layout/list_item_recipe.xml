@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
-            android:contentDescription="Recipe Image" />
+            android:contentDescription="@string/recipe_image" />
 
         <TextView
             android:id="@+id/recipe_name_text_view"

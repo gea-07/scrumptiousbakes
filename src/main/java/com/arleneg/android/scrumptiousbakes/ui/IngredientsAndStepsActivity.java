@@ -47,8 +47,9 @@ public class IngredientsAndStepsActivity extends AppCompatActivity
                 fragmentManager.beginTransaction()
                         .replace(R.id.ingredients_and_steps_container, ingredientsAndStepsFragment)
                         .commit();
-                fragmentManager.beginTransaction().addToBackStack(null);
-                fragmentManager.beginTransaction().commit();
+                fragmentManager.beginTransaction()
+                        .addToBackStack(null)
+                        .commit();
             }
             if (findViewById(R.id.step_linear_layout) != null) {
                 mTwoPanes = true;
@@ -62,8 +63,7 @@ public class IngredientsAndStepsActivity extends AppCompatActivity
                             .replace(R.id.detail_container, stepDetailFragment)
                             .commit();
 
-                    fragmentManager.beginTransaction().addToBackStack(null);
-                    fragmentManager.beginTransaction().commit();
+                    fragmentManager.beginTransaction().addToBackStack(null).commit();
                 }
 
             } else {

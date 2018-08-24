@@ -42,8 +42,8 @@ public class RecipeStepDetailFragment extends Fragment {
     private static final String CURRENT_WINDOW = "currentWindow";
 
 
-    @BindView(R.id.step_recipe_name_tv)
-    TextView mRecipeName;
+    @BindView(R.id.step_recipe_title_tv)
+    TextView mStepTitle;
 
     @BindView(R.id.step_description_tv)
     TextView mStepDescription;
@@ -101,7 +101,7 @@ public class RecipeStepDetailFragment extends Fragment {
         }
 
         if (mStep != null) {
-            mRecipeName.setText(mRecipe.getName());
+            mStepTitle.setText(mRecipe.getSteps().get(mStepPosition).getShortDescription());
             mStepDescription.setText(mStep.getDescription());
         }
 

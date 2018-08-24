@@ -6,12 +6,4 @@
         <item name="colorPrimaryDark">#3E2723</item>
         <item name="colorAccent">#8D6E63</item>
     </style>
-
-    <style name="CustomTabText" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="vpTitleStrip">
-        <item name="android:textSize">18sp</item>
-    </style>
 </resources>
