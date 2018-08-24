@@ -1,20 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<android.support.v4.view.ViewPager
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/step_view_pager"
+    android:id="@+id/step_detail_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
+    android:orientation="vertical"
     tools:context=".ui.RecipeStepDetailActivity">
 
-    <android.support.v4.view.PagerTitleStrip
-        android:layout_width="wrap_content"
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:background="@color/colorAccent"
-        android:layout_marginBottom="8dp"
-        style="@style/vpTitleStrip" />
-</android.support.v4.view.ViewPager>
+        android:id="@+id/step_fragment">
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom">
+
+        <Button
+            android:id="@+id/btn_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/previous_step_button"/>
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next_step_button"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

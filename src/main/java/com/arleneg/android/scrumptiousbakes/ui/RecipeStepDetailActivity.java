@@ -1,29 +1,33 @@
 package com.arleneg.android.scrumptiousbakes.ui;
 
 import android.content.Intent;
-import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
-import com.ToxicBakery.viewpager.transforms.FlipHorizontalTransformer;
 import com.arleneg.android.scrumptiousbakes.R;
 import com.arleneg.android.scrumptiousbakes.data.Recipe;
-import com.arleneg.android.scrumptiousbakes.data.Step;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RecipeStepDetailActivity extends AppCompatActivity {
+
+    @BindView(R.id.btn_next)
+    Button mNextButton;
+
+    @BindView(R.id.btn_previous)
+    Button mPreviousButton;
+
     public static final String EXTRA_RECIPE_ID = "stepId";
     public static final String EXTRA_CURRENT_POSITION_ID = "positionId";
 
-    private List<Step> mSteps;
+    private int mStepPosition;
     private Recipe mRecipe;
 
     @Override
@@ -31,41 +35,54 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_step_detail);
 
+        ButterKnife.bind(this);
+
         Intent intent = getIntent();
         mRecipe = intent.getParcelableExtra(EXTRA_RECIPE_ID);
-        int currentPosition = intent.getIntExtra(EXTRA_CURRENT_POSITION_ID, 0);
-        mSteps = mRecipe.getSteps();
+        mStepPosition = intent.getIntExtra(EXTRA_CURRENT_POSITION_ID, 0);
 
-        RecipeStepPagerAdapter pagerAdapter = new RecipeStepPagerAdapter(getSupportFragmentManager());
-        ViewPager pager = findViewById(R.id.step_view_pager);
-        pager.setAdapter(pagerAdapter);
-        pager.setCurrentItem(currentPosition);
-        pager.setPageTransformer(true, new FlipHorizontalTransformer());
-        pager.setOffscreenPageLimit(1);
+        if (savedInstanceState == null) {
+            initializeRecipeStepFragment();
+        }
+
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (mStepPosition < mRecipe.getSteps().size() - 1) {
+                    mStepPosition++;
+                }
+                else {
+                    mStepPosition = 0;
+                }
+                initializeRecipeStepFragment();
+            }
+        });
+
+        mPreviousButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (mStepPosition > 0) {
+                    mStepPosition--;
+                }
+                initializeRecipeStepFragment();
+            }
+        });
+
     }
 
-    private class RecipeStepPagerAdapter extends FragmentStatePagerAdapter {
+    private void initializeRecipeStepFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
-        public RecipeStepPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
+        RecipeStepDetailFragment stepDetailFragment = new RecipeStepDetailFragment();
 
-        @Override
-        public Fragment getItem(int position) {
-            RecipeStepDetailFragment stepDetailFragment = new RecipeStepDetailFragment();
-            stepDetailFragment.setStep(mRecipe, position);
-            return stepDetailFragment;
-        }
+        // Set the list of image id's for the head fragment and set the position to the first image in the list
+        stepDetailFragment.setStep(mRecipe, mStepPosition);
 
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mSteps.get(position).getShortDescription();
-        }
+        // stepDetailFragment.setRetainInstance(true);
 
-        @Override
-        public int getCount() {
-            return (mSteps == null) ? 0 : mSteps.size();
-        }
+        // Add the fragment to its container using a FragmentManager and a Transaction
+        fragmentManager.beginTransaction()
+                .replace(R.id.step_fragment, stepDetailFragment)
+                .commit();
+        fragmentManager.beginTransaction().addToBackStack(null);
+        fragmentManager.beginTransaction().commit();
     }
 }

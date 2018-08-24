@@ -9,4 +9,6 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="recipe_without_a_video">Recipe without a video</string>
+    <string name="next_step_button">Next Step</string>
+    <string name="previous_step_button">Previous Step</string>
 </resources>

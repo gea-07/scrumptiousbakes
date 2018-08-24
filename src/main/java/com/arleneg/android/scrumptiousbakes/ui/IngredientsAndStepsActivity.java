@@ -34,8 +34,6 @@ public class IngredientsAndStepsActivity extends AppCompatActivity
 
         if (savedInstanceState == null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-//            IngredientsAndStepsFragment fragment = (IngredientsAndStepsFragment)
-//                    getSupportFragmentManager().findFragmentById(R.id.ingredients_and_steps_container);
 
             if (fragmentManager.findFragmentById(R.id.ingredients_and_steps_container) == null) {
                 IngredientsAndStepsFragment ingredientsAndStepsFragment = new IngredientsAndStepsFragment();

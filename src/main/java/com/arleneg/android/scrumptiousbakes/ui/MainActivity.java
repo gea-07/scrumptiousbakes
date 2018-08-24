@@ -154,10 +154,12 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
 
         String ingredientStr = PreferenceManager.getDefaultSharedPreferences(this)
                 .getString(IngredientsAndStepsFragment.PREF_INGREDIENT_LIST, null);
-        String[] ingredientList = ingredientStr.split(",");
-        // initialize widget with value from shared preference
-        initializeWidget(PreferenceManager.getDefaultSharedPreferences(this)
-                .getString(IngredientsAndStepsFragment.PREF_RECIPE_TITLE, null), ingredientList);
+        if (ingredientStr != null) {
+            String[] ingredientList = ingredientStr.split(",");
+            // initialize widget with value from shared preference
+            initializeWidget(PreferenceManager.getDefaultSharedPreferences(this)
+                    .getString(IngredientsAndStepsFragment.PREF_RECIPE_TITLE, null), ingredientList);
+        }
     }
 }
 
